@@ -69,10 +69,12 @@ fun MoreScreenPreview() {
 @Composable
 fun MoreScreen() {
     val scrollState = rememberScrollState()
+    val text_color = 0xff512314
+    val background_color = 0xFFf4ebdc
     Column(
         modifier = Modifier
             .wrapContentHeight()
-            .background(color = Color(0xFFf4ebdc))
+            .background(color = Color(background_color))
             .padding(WindowInsets.systemBars.asPaddingValues())
     ) {
         Box(
@@ -92,33 +94,116 @@ fun MoreScreen() {
                 text = "더보기",
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xff512314),
+                color = Color(text_color),
                 modifier = Modifier.align(Alignment.Center)
             )
         }
-        Divider(color = Color.Red)
+        Divider(color = Color(0x00ffffff))
+        Box(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                text = "진행중인 이벤트",
+                fontSize = 30.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(text_color),
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .padding(15.dp)
+            )
+        }
+
         Row {
             Box(
                 modifier = Modifier
                     .height(130.dp)
-                    .width(20.dp)
+                    .width(30.dp)
                     .background(color = Color(0xfff5efe3))
             ) {
                 Image(
                     painter = painterResource(R.drawable.back_arrow_scroll),
                     contentDescription = "",
-                    modifier = Modifier.align(Alignment.Center)
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .size(25.dp)
                 )
             }
-            Row(modifier = Modifier
-                .horizontalScroll(scrollState)
-                .height(130.dp)
-                .wrapContentWidth()) {
-                for (index in 1..4){
-                    Image(painter = painterResource(R.drawable.event1),
-                        contentDescription = "배너들")
-                }
+            Row(
+                modifier = Modifier
+                    .horizontalScroll(scrollState)
+                    .height(130.dp)
+                    .wrapContentWidth(),
+
+                ) {
+                Image(
+                    painter = painterResource(R.drawable.event3),
+                    contentDescription = "배너들",
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(start = 35.dp)
+                        .size(height = 130.dp, width = 300.dp)
+                )
+                Image(
+                    painter = painterResource(R.drawable.event4),
+                    contentDescription = "배너임",
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(start = 35.dp)
+                        .size(height = 130.dp, width = 300.dp)
+                )
+                Image(
+                    painter = painterResource(R.drawable.event1),
+                    contentDescription = "배너",
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(start = 35.dp)
+                        .size(height = 130.dp, width = 300.dp)
+                )
+                Image(
+                    painter = painterResource(R.drawable.event2),
+                    contentDescription = "배너라고",
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(start = 35.dp, end = 35.dp)
+                        .size(height = 130.dp, width = 300.dp)
+                )
             }
         }
+        Column(modifier = Modifier.padding(top = 60.dp)
+        ) {
+            var menuarray = listOf("이벤트","매장소개","메뉴소개","약관 및 정책","고객센터")
+            for (count in 0..4){
+                ToggleLine()
+                MoreMenu("${listOf(menuarray[count])}")
+            }
+        }
+    }
+}
+
+@Composable
+fun ToggleLine(){
+    Divider(color = Color.LightGray,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(5.dp),)
+}
+
+@Composable
+fun MoreMenu(text:String){
+    val background_color = 0xFFf4ebdc
+    val text_color = 0xff512314
+    Box(modifier = Modifier
+        .fillMaxWidth()
+        .background(color = Color(background_color))
+        .height(60.dp)){
+        Text(
+            text = text,
+            fontSize = 25.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color(text_color),
+            modifier = Modifier
+                .align(Alignment.CenterStart)
+                .padding(start = 30.dp)
+        )
     }
 }
