@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -76,6 +77,7 @@ fun MoreScreen() {
             .wrapContentHeight()
             .background(color = Color(background_color))
             .padding(WindowInsets.systemBars.asPaddingValues())
+            .fillMaxHeight()
     ) {
         Box(
             modifier = Modifier
@@ -98,7 +100,7 @@ fun MoreScreen() {
                 modifier = Modifier.align(Alignment.Center)
             )
         }
-        Divider(color = Color(0x00ffffff))
+        Divider(color = Color(background_color))
         Box(
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -172,10 +174,12 @@ fun MoreScreen() {
         Column(modifier = Modifier.padding(top = 60.dp)
         ) {
             var menuarray = listOf("이벤트","매장소개","메뉴소개","약관 및 정책","고객센터")
-            for (count in 0..4){
+            for (count in menuarray){
                 ToggleLine()
-                MoreMenu("${listOf(menuarray[count])}")
+                MoreMenu("${count}")
             }
+            ToggleLine()
+            MoreMenu("환경설정")
         }
     }
 }
