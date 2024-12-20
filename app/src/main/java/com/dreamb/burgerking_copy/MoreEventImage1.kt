@@ -23,6 +23,17 @@ class MoreEventImage1 : ComponentActivity() {
 @Composable
 fun SelectEventImagePage(pageNum:Int){
     when {
-        pageNum == R.drawable.event3 -> EventImage1Click()
+        pageNum == R.drawable.event1 -> EventImage1Click()
+        pageNum == R.drawable.event2 -> EventImage2Click()
+        pageNum == R.drawable.event3 -> EventImage3Click()
+        pageNum == R.drawable.event4 -> EventImage4Click()
+        pageNum == R.drawable.event5 -> EventImage5Click()
+        pageNum == R.drawable.event6 -> EventImage6Click()
+        pageNum == R.drawable.event7 -> EventImage7Click()
+        pageNum == R.drawable.event8 -> EventImage8Click()
+        pageNum == R.drawable.event9 -> EventImage9Click()
+        pageNum == R.drawable.event10 -> EventImage10Click()
+        pageNum == R.drawable.event11 -> EventImage11Click()
+        pageNum == R.drawable.event12 -> EventImage12Click()
     }
 }

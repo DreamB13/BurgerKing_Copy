@@ -89,7 +89,7 @@ fun ContentText(text: String) {
         text = text,
         fontSize = 15.sp,
         fontWeight = FontWeight.Bold,
-        textAlign = TextAlign.Center,
+        textAlign = TextAlign.Start,
         color = Color(text_color),
         modifier = Modifier
             .fillMaxHeight()
@@ -105,7 +105,7 @@ fun ContentTextBold(text: String) {
         text = text,
         fontSize = 20.sp,
         fontWeight = FontWeight.Bold,
-        textAlign = TextAlign.Center,
+        textAlign = TextAlign.Start,
         color = Color(text_color),
         modifier = Modifier
             .fillMaxHeight()
@@ -115,13 +115,13 @@ fun ContentTextBold(text: String) {
 }
 
 @Composable
-fun EventImage() {
+fun EventImage(moreEventImage:Int) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
     ) {
         Image(
-            painter = painterResource(R.drawable.more_event_image_1),
+            painter = painterResource(moreEventImage),
             contentDescription = "이벤트 이미지",
             contentScale = ContentScale.Fit,
             modifier = Modifier
@@ -150,5 +150,23 @@ fun ContentButton(text: String) {
     )
     {
         Text(text = text, fontWeight = FontWeight.Bold)
+    }
+}
+
+@Composable
+fun ContentAlarmButton(text: String) {
+    Button(
+        colors = ButtonDefaults.buttonColors(
+            contentColor = Color(0xffffffff),
+            containerColor = Color(0xffee2e24)
+        ),
+        shape = RoundedCornerShape(12.dp),
+        onClick = {},
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 10.dp)
+    )
+    {
+        Text(text = text)
     }
 }

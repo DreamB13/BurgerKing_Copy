@@ -127,9 +127,17 @@ sealed class BottomNavItem(
 }
 
 val eventImageArray = listOf(
-    R.drawable.event3,
-    R.drawable.event4,
     R.drawable.event1,
     R.drawable.event2,
+    R.drawable.event3,
+    R.drawable.event4,
+    R.drawable.event5,
+    R.drawable.event6,
+    R.drawable.event7,
+    R.drawable.event8,
+    R.drawable.event9,
+    R.drawable.event10,
+    R.drawable.event11,
+    R.drawable.event12,
 )
 
