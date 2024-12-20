@@ -164,7 +164,6 @@ fun MoreScreen(navController: NavHostController) {
                             .size(height = 130.dp, width = 300.dp)
                             .clickable {
                                 val intent = Intent(context, MoreEventImage1::class.java).apply {
-                                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                                     putExtra("numOfEvent", image)
                                 }
                                 context.startActivity(intent)
