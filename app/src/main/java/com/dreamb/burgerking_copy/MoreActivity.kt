@@ -1,7 +1,9 @@
 package com.dreamb.burgerking_copy
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.MediaController
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -27,48 +29,59 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.icons.materialIcon
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DividerDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHost
+import androidx.navigation.NavHostController
+import androidx.navigation.Navigator
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.dreamb.burgerking_copy.ui.theme.BurgerKing_CopyTheme
+import kotlinx.coroutines.selects.select
 
 class MoreActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContent {
             BurgerKing_CopyTheme {
-                MoreScreen()
+                MoreScreen(navController = rememberNavController())
             }
         }
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun MoreScreenPreview() {
-    BurgerKing_CopyTheme {
-        MoreScreen()
-    }
-}
-
-@Composable
-fun MoreScreen() {
+fun MoreScreen(navController: NavHostController) {
+    val context = LocalContext.current
     val scrollState = rememberScrollState()
     val text_color = 0xff512314
     val background_color = 0xFFf4ebdc
@@ -81,7 +94,7 @@ fun MoreScreen() {
     ) {
         Box(
             modifier = Modifier
-                .height(50.dp)
+                .height(60.dp)
                 .fillMaxWidth(),
         ) {
             Image(
@@ -90,7 +103,11 @@ fun MoreScreen() {
                 modifier = Modifier
                     .size(30.dp)
                     .align(Alignment.CenterStart)
-                    .clickable { /*홈으로 돌아가는 기능 구현*/ }
+                    .clickable {
+                        navController.navigate(BottomNavItem.HomePage.screenRoute) {
+                            popUpTo(BottomNavItem.HomePage.screenRoute) { inclusive = true }
+                        }
+                    }
             )
             Text(
                 text = "더보기",
@@ -137,46 +154,32 @@ fun MoreScreen() {
                     .wrapContentWidth(),
 
                 ) {
-                Image(
-                    painter = painterResource(R.drawable.event3),
-                    contentDescription = "배너들",
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .padding(start = 35.dp)
-                        .size(height = 130.dp, width = 300.dp)
-                )
-                Image(
-                    painter = painterResource(R.drawable.event4),
-                    contentDescription = "배너임",
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .padding(start = 35.dp)
-                        .size(height = 130.dp, width = 300.dp)
-                )
-                Image(
-                    painter = painterResource(R.drawable.event1),
-                    contentDescription = "배너",
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .padding(start = 35.dp)
-                        .size(height = 130.dp, width = 300.dp)
-                )
-                Image(
-                    painter = painterResource(R.drawable.event2),
-                    contentDescription = "배너라고",
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .padding(start = 35.dp, end = 35.dp)
-                        .size(height = 130.dp, width = 300.dp)
-                )
+                for (image in eventImageArray) {
+                    Image(
+                        painter = painterResource(image),
+                        contentDescription = "배너들",
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(start = 35.dp)
+                            .size(height = 130.dp, width = 300.dp)
+                            .clickable {
+                                val intent = Intent(context, MoreEventImage1::class.java).apply {
+                                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                    putExtra("numOfEvent", image)
+                                }
+                                context.startActivity(intent)
+                            }
+                    )
+                }
             }
         }
-        Column(modifier = Modifier.padding(top = 60.dp)
+        Column(
+            modifier = Modifier.padding(top = 60.dp)
         ) {
-            var menuarray = listOf("이벤트","매장소개","메뉴소개","약관 및 정책","고객센터")
-            for (count in menuarray){
+            val menuarray = listOf("이벤트", "매장소개", "메뉴소개", "약관 및 정책", "고객센터")
+            for (count in menuarray) {
                 ToggleLine()
-                MoreMenu("${count}")
+                MoreMenu(count)
             }
             ToggleLine()
             MoreMenu("환경설정")
@@ -185,21 +188,25 @@ fun MoreScreen() {
 }
 
 @Composable
-fun ToggleLine(){
-    Divider(color = Color.LightGray,
+fun ToggleLine() {
+    Divider(
+        color = Color(0xffefe8d7),
         modifier = Modifier
             .fillMaxWidth()
-            .height(5.dp),)
+            .height(2.dp),
+    )
 }
 
 @Composable
-fun MoreMenu(text:String){
+fun MoreMenu(text: String) {
     val background_color = 0xFFf4ebdc
     val text_color = 0xff512314
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .background(color = Color(background_color))
-        .height(60.dp)){
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color = Color(background_color))
+            .height(60.dp)
+    ) {
         Text(
             text = text,
             fontSize = 25.sp,

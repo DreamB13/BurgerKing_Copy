@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">BurgerKing_Copy</string>
+    <string name="Home">홈</string>
+    <string name="Cupon">쿠폰</string>
+    <string name="Order">주문</string>
+    <string name="Myking">MY킹</string>
+    <string name="More">더보기</string>
 </resources>

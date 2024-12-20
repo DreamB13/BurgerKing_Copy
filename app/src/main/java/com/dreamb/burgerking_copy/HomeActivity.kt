@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
 import com.dreamb.burgerking_copy.ui.theme.BurgerKing_CopyTheme
 
 class HomeActivity : ComponentActivity() {
@@ -18,14 +19,6 @@ class HomeActivity : ComponentActivity() {
                 HomeScreen()
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenPreview(){
-    BurgerKing_CopyTheme {
-        MainScreen()
     }
 }
 
