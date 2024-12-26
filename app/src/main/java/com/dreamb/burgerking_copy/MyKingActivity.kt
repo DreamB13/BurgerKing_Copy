@@ -1,4 +1,4 @@
-package com.dreamb.burgerking_copy
+    package com.dreamb.burgerking_copy
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
